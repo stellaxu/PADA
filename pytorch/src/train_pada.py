@@ -281,10 +281,10 @@ def train(config):
         ad_net.train(True)
         weight_ad = torch.zeros(inputs.size(0))
         label_numpy = labels_source.data.cpu().numpy()
-        for j in range(inputs.size(0) / 2):
+        for j in range(int(inputs.size(0) / 2)):
             weight_ad[j] = class_weight[int(label_numpy[j])]
         weight_ad = weight_ad / torch.max(weight_ad[0:inputs.size(0)/2])
-        for j in range(inputs.size(0) / 2, inputs.size(0)):
+        for j in range(int(inputs.size(0) / 2), inputs.size(0)):
             weight_ad[j] = 1.0            
         transfer_loss = transfer_criterion(features, ad_net, gradient_reverse_layer, \
                                            weight_ad, use_gpu)
