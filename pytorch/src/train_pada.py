@@ -229,6 +229,7 @@ def train(config):
     len_train_target = len(dset_loaders["target"]) - 1
     transfer_loss_value = classifier_loss_value = total_loss_value = 0.0
     best_acc = 0.0
+    best_model = 0
     for i in range(config["num_iterations"]):
         if i % config["test_interval"] == 0:
             base_network.train(False)
@@ -289,7 +290,7 @@ def train(config):
         transfer_loss = transfer_criterion(features, ad_net, gradient_reverse_layer, \
                                            weight_ad, use_gpu)
 
-        classifier_loss = class_criterion(outputs.narrow(0, 0, int(inputs.size(0)/2)), labels_source)
+        classifier_loss = class_criterion(outputs.narrow(0, 0, int(inputs.size(0)/2), labels_source))
 
         total_loss = loss_params["trade_off"] * transfer_loss + classifier_loss
         total_loss.backward()
