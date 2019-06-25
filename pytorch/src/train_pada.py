@@ -14,7 +14,7 @@ import lr_schedule
 import data_list
 from data_list import ImageList
 from torch.autograd import Variable
-import random
+import random #haha
 
 optim_dict = {"SGD": optim.SGD}
 
